@@ -32,7 +32,7 @@ export class UsersResolver {
 
   @Mutation('register')
   async register(@Args('createUserInput') args: CreateUserDto): Promise<any> {
-    const createdCat = await this.usersService.create(args);
-    return createdCat;
+    const createdUser = await this.usersService.create(args);
+    return createdUser;
   }
 }
