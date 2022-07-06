@@ -7,6 +7,22 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export interface ArtistInput {
+    firstName?: Nullable<string>;
+    secondName?: Nullable<string>;
+    middleName?: Nullable<string>;
+    birthDate?: Nullable<string>;
+    birthPlace?: Nullable<string>;
+    country?: Nullable<string>;
+    bandsIds?: Nullable<Nullable<string>[]>;
+    instruments?: Nullable<Nullable<string>[]>;
+}
+
+export interface PaginationInput {
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+}
+
 export interface CreateUserInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
@@ -34,7 +50,33 @@ export interface Artist {
     birthPlace?: Nullable<string>;
     country?: Nullable<string>;
     bands?: Nullable<Nullable<Band>[]>;
-    instruments?: Nullable<string>;
+    instruments?: Nullable<Nullable<string>[]>;
+}
+
+export interface IQuery {
+    artist(id: string): Nullable<Artist> | Promise<Nullable<Artist>>;
+    artists(paginationInput?: Nullable<PaginationInput>): Nullable<ArtistsResult> | Promise<Nullable<ArtistsResult>>;
+    user(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
+    jwt(email: string, password: string): Nullable<JWT> | Promise<Nullable<JWT>>;
+}
+
+export interface IMutation {
+    createArtist(createArtistInput?: Nullable<ArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
+    updateArtist(id: string, updateArtistInput?: Nullable<ArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
+    deleteArtist(id: string): Nullable<DeleteArtistResult> | Promise<Nullable<DeleteArtistResult>>;
+    register(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
+}
+
+export interface DeleteArtistResult {
+    acknowledged?: Nullable<boolean>;
+    deletedCount?: Nullable<number>;
+}
+
+export interface ArtistsResult {
+    items?: Nullable<Nullable<Artist>[]>;
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+    total?: Nullable<number>;
 }
 
 export interface Band {
@@ -90,15 +132,6 @@ export interface User {
 
 export interface JWT {
     jwt: string;
-}
-
-export interface IQuery {
-    user(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
-    jwt(email: string, password: string): Nullable<JWT> | Promise<Nullable<JWT>>;
-}
-
-export interface IMutation {
-    register(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 }
 
 type Nullable<T> = T | null;
