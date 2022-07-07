@@ -5,12 +5,15 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { UsersModule } from './modules/users/users.module';
 import { ArtistsModule } from './modules/artists/artists.module';
 import { BandsModule } from './modules/bands/bands.module';
+import { GenresModule } from './modules/genres/genres.module';
+import { GraphQLError, GraphQLFormattedError } from 'graphql';
 
 @Module({
   imports: [
     UsersModule,
     ArtistsModule,
     BandsModule,
+    GenresModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       context: ({ req }: any) => ({ req }),

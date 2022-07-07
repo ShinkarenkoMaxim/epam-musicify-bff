@@ -31,7 +31,7 @@ export class BandsService {
         .pipe(map((response) => response.data)),
     );
 
-    if (res) res.items = res.items.map((user) => ({ ...user, id: user._id })); // Convert _id to id
+    if (res) res.items = res.items.map((band) => ({ ...band, id: band._id })); // Convert _id to id
 
     return res;
   }
@@ -48,10 +48,10 @@ export class BandsService {
     return res;
   }
 
-  async update(id: string, artist: UpdateBandDto, authorizationHeader: string) {
+  async update(id: string, band: UpdateBandDto, authorizationHeader: string) {
     let res = await lastValueFrom(
       this.httpService
-        .put(this.baseUrl + id, artist, {
+        .put(this.baseUrl + id, band, {
           headers: { authorization: authorizationHeader },
         })
         .pipe(map((response) => response.data)),

@@ -36,6 +36,13 @@ export interface MemberInput {
     years?: Nullable<Nullable<string>[]>;
 }
 
+export interface GenreInput {
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    country?: Nullable<string>;
+    year?: Nullable<number>;
+}
+
 export interface CreateUserInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
@@ -71,6 +78,8 @@ export interface IQuery {
     artists(paginationInput?: Nullable<PaginationInput>): Nullable<ArtistsResult> | Promise<Nullable<ArtistsResult>>;
     band(id: string): Nullable<Band> | Promise<Nullable<Band>>;
     bands(paginationInput?: Nullable<PaginationInput>): Nullable<BandsResult> | Promise<Nullable<BandsResult>>;
+    genre(id: string): Nullable<Genre> | Promise<Nullable<Genre>>;
+    genres(paginationInput?: Nullable<PaginationInput>): Nullable<GenresResult> | Promise<Nullable<GenresResult>>;
     user(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     jwt(email: string, password: string): Nullable<JWT> | Promise<Nullable<JWT>>;
 }
@@ -82,6 +91,9 @@ export interface IMutation {
     createBand(createBandInput?: Nullable<BandInput>, createMembersInput?: Nullable<Nullable<MemberInput>[]>): Nullable<Band> | Promise<Nullable<Band>>;
     updateBand(id: string, updateBandInput?: Nullable<BandInput>, updateMembersInput?: Nullable<Nullable<MemberInput>[]>): Nullable<Band> | Promise<Nullable<Band>>;
     deleteBand(id: string): Nullable<DeleteBandResult> | Promise<Nullable<DeleteBandResult>>;
+    createGenre(createGenreInput?: Nullable<GenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
+    updateGenre(id: string, updateGenreInput?: Nullable<GenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
+    deleteGenre(id: string): Nullable<DeleteGenreResult> | Promise<Nullable<DeleteGenreResult>>;
     register(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 }
 
@@ -139,6 +151,18 @@ export interface Genre {
     description?: Nullable<string>;
     country?: Nullable<string>;
     year?: Nullable<number>;
+}
+
+export interface DeleteGenreResult {
+    acknowledged?: Nullable<boolean>;
+    deletedCount?: Nullable<number>;
+}
+
+export interface GenresResult {
+    items?: Nullable<Nullable<Genre>[]>;
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+    total?: Nullable<number>;
 }
 
 export interface Track {

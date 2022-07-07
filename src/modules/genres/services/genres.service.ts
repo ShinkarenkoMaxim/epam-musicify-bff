@@ -1,19 +1,19 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { lastValueFrom, map } from 'rxjs';
-import { CreateArtistDto } from '../dto/create-artist.dto';
-import { UpdateArtistDto } from '../dto/update-artist.dto';
+import { CreateGenreDto } from '../dto/create-genre.dto';
+import { UpdateGenreDto } from '../dto/update-genre.dto';
 
 @Injectable()
-export class ArtistsService {
-  private baseUrl = 'http://localhost:3002/v1/artists/';
+export class GenresService {
+  private baseUrl = 'http://localhost:3001/v1/genres/';
 
   constructor(private readonly httpService: HttpService) {}
 
-  async create(artist: CreateArtistDto, authorizationHeader: string) {
+  async create(genre: CreateGenreDto, authorizationHeader: string) {
     let res = await lastValueFrom(
       this.httpService
-        .post(this.baseUrl, artist, {
+        .post(this.baseUrl, genre, {
           headers: { authorization: authorizationHeader },
         })
         .pipe(map((response) => response.data)),
@@ -33,7 +33,7 @@ export class ArtistsService {
 
     // Convert _id to id
     if (res) {
-      res.items = res.items.map((artist) => ({ ...artist, id: artist._id }));
+      res.items = res.items.map((genre) => ({ ...genre, id: genre._id }));
     }
 
     return res;
@@ -51,14 +51,10 @@ export class ArtistsService {
     return res;
   }
 
-  async update(
-    id: string,
-    artist: UpdateArtistDto,
-    authorizationHeader: string,
-  ) {
+  async update(id: string, genre: UpdateGenreDto, authorizationHeader: string) {
     let res = await lastValueFrom(
       this.httpService
-        .put(this.baseUrl + id, artist, {
+        .put(this.baseUrl + id, genre, {
           headers: { authorization: authorizationHeader },
         })
         .pipe(map((response) => response.data)),
