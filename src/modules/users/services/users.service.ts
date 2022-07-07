@@ -15,15 +15,22 @@ export class UsersService {
         .post(this.baseUrl + 'register', user)
         .pipe(map((response) => response.data)),
     );
+
+    if (res && '_id' in res) res.id = res._id;
+
     return res;
   }
 
   async findUnique(id: string) {
-    return lastValueFrom(
+    const res = await lastValueFrom(
       this.httpService
         .get(this.baseUrl + id)
         .pipe(map((response) => response.data)),
     );
+
+    if (res && '_id' in res) res.id = res._id;
+
+    return res;
   }
 
   async login(email: string, password: string) {

@@ -23,6 +23,19 @@ export interface PaginationInput {
     offset?: Nullable<number>;
 }
 
+export interface BandInput {
+    name?: Nullable<string>;
+    origin?: Nullable<string>;
+    website?: Nullable<string>;
+    genresIds?: Nullable<Nullable<string>[]>;
+}
+
+export interface MemberInput {
+    artist?: Nullable<string>;
+    instrument?: Nullable<string>;
+    years?: Nullable<Nullable<string>[]>;
+}
+
 export interface CreateUserInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
@@ -56,6 +69,8 @@ export interface Artist {
 export interface IQuery {
     artist(id: string): Nullable<Artist> | Promise<Nullable<Artist>>;
     artists(paginationInput?: Nullable<PaginationInput>): Nullable<ArtistsResult> | Promise<Nullable<ArtistsResult>>;
+    band(id: string): Nullable<Band> | Promise<Nullable<Band>>;
+    bands(paginationInput?: Nullable<PaginationInput>): Nullable<BandsResult> | Promise<Nullable<BandsResult>>;
     user(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     jwt(email: string, password: string): Nullable<JWT> | Promise<Nullable<JWT>>;
 }
@@ -64,6 +79,9 @@ export interface IMutation {
     createArtist(createArtistInput?: Nullable<ArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
     updateArtist(id: string, updateArtistInput?: Nullable<ArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
     deleteArtist(id: string): Nullable<DeleteArtistResult> | Promise<Nullable<DeleteArtistResult>>;
+    createBand(createBandInput?: Nullable<BandInput>, createMembersInput?: Nullable<Nullable<MemberInput>[]>): Nullable<Band> | Promise<Nullable<Band>>;
+    updateBand(id: string, updateBandInput?: Nullable<BandInput>, updateMembersInput?: Nullable<Nullable<MemberInput>[]>): Nullable<Band> | Promise<Nullable<Band>>;
+    deleteBand(id: string): Nullable<DeleteBandResult> | Promise<Nullable<DeleteBandResult>>;
     register(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 }
 
@@ -92,6 +110,18 @@ export interface Member {
     artist?: Nullable<string>;
     instrument?: Nullable<string>;
     years?: Nullable<Nullable<string>[]>;
+}
+
+export interface DeleteBandResult {
+    acknowledged?: Nullable<boolean>;
+    deletedCount?: Nullable<number>;
+}
+
+export interface BandsResult {
+    items?: Nullable<Nullable<Band>[]>;
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+    total?: Nullable<number>;
 }
 
 export interface Favourites {

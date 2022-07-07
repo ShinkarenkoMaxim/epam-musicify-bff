@@ -1,19 +1,19 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { lastValueFrom, map } from 'rxjs';
-import { CreateArtistDto } from '../dto/create-artist.dto';
-import { UpdateArtistDto } from '../dto/update-artist.dto';
+import { CreateBandDto } from '../dto/create-band.dto';
+import { UpdateBandDto } from '../dto/update-band.dto';
 
 @Injectable()
-export class ArtistsService {
-  private baseUrl = 'http://localhost:3002/v1/artists/';
+export class BandsService {
+  private baseUrl = 'http://localhost:3003/v1/bands/';
 
   constructor(private readonly httpService: HttpService) {}
 
-  async create(artist: CreateArtistDto, authorizationHeader: string) {
+  async create(band: CreateBandDto, authorizationHeader: string) {
     let res = await lastValueFrom(
       this.httpService
-        .post(this.baseUrl, artist, {
+        .post(this.baseUrl, band, {
           headers: { authorization: authorizationHeader },
         })
         .pipe(map((response) => response.data)),
@@ -48,11 +48,7 @@ export class ArtistsService {
     return res;
   }
 
-  async update(
-    id: string,
-    artist: UpdateArtistDto,
-    authorizationHeader: string,
-  ) {
+  async update(id: string, artist: UpdateBandDto, authorizationHeader: string) {
     let res = await lastValueFrom(
       this.httpService
         .put(this.baseUrl + id, artist, {
