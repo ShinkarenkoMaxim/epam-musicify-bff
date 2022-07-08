@@ -8,6 +8,7 @@ import { BandsModule } from './modules/bands/bands.module';
 import { GenresModule } from './modules/genres/genres.module';
 import { FavouritesModule } from './modules/favourites/favourites.module';
 import { AlbumsModule } from './modules/albums/albums.module';
+import { TracksModule } from './modules/tracks/tracks.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AlbumsModule } from './modules/albums/albums.module';
     GenresModule,
     FavouritesModule,
     AlbumsModule,
+    TracksModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       context: ({ req }: any) => ({ req }),

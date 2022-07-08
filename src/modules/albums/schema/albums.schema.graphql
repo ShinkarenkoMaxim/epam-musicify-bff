@@ -34,7 +34,7 @@ type AlbumsResult {
 
 input AlbumInput {
   name: String
-  released: String
+  released: Int
   artistsIds: [String]
   bandsIds: [String]
   tracksIds: [String]

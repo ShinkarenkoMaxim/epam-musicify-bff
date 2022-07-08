@@ -9,7 +9,7 @@
 /* eslint-disable */
 export interface AlbumInput {
     name?: Nullable<string>;
-    released?: Nullable<string>;
+    released?: Nullable<number>;
     artistsIds?: Nullable<Nullable<string>[]>;
     bandsIds?: Nullable<Nullable<string>[]>;
     tracksIds?: Nullable<Nullable<string>[]>;
@@ -52,6 +52,16 @@ export interface GenreInput {
     year?: Nullable<number>;
 }
 
+export interface TrackInput {
+    title?: Nullable<string>;
+    albumId?: Nullable<string>;
+    bandsIds?: Nullable<Nullable<string>[]>;
+    artistsIds?: Nullable<Nullable<string>[]>;
+    duration?: Nullable<number>;
+    released?: Nullable<number>;
+    genresIds?: Nullable<Nullable<string>[]>;
+}
+
 export interface CreateUserInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
@@ -80,6 +90,8 @@ export interface IQuery {
     favourites(): Nullable<Favourites> | Promise<Nullable<Favourites>>;
     genre(id: string): Nullable<Genre> | Promise<Nullable<Genre>>;
     genres(paginationInput?: Nullable<PaginationInput>): Nullable<GenresResult> | Promise<Nullable<GenresResult>>;
+    track(id: string): Nullable<Track> | Promise<Nullable<Track>>;
+    tracks(paginationInput?: Nullable<PaginationInput>): Nullable<TracksResult> | Promise<Nullable<TracksResult>>;
     user(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     jwt(email: string, password: string): Nullable<JWT> | Promise<Nullable<JWT>>;
 }
@@ -105,6 +117,9 @@ export interface IMutation {
     createGenre(createGenreInput?: Nullable<GenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
     updateGenre(id: string, updateGenreInput?: Nullable<GenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
     deleteGenre(id: string): Nullable<DeleteGenreResult> | Promise<Nullable<DeleteGenreResult>>;
+    createTrack(createTrackInput?: Nullable<TrackInput>): Nullable<Track> | Promise<Nullable<Track>>;
+    updateTrack(id: string, updateTrackInput?: Nullable<TrackInput>): Nullable<Track> | Promise<Nullable<Track>>;
+    deleteTrack(id: string): Nullable<DeleteTrackResult> | Promise<Nullable<DeleteTrackResult>>;
     register(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 }
 
@@ -209,6 +224,18 @@ export interface Track {
     duration?: Nullable<number>;
     released?: Nullable<number>;
     genres?: Nullable<Nullable<Genre>[]>;
+}
+
+export interface DeleteTrackResult {
+    acknowledged?: Nullable<boolean>;
+    deletedCount?: Nullable<number>;
+}
+
+export interface TracksResult {
+    items?: Nullable<Nullable<Track>[]>;
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+    total?: Nullable<number>;
 }
 
 export interface User {
