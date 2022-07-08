@@ -7,6 +7,20 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export interface AlbumInput {
+    name?: Nullable<string>;
+    released?: Nullable<string>;
+    artistsIds?: Nullable<Nullable<string>[]>;
+    bandsIds?: Nullable<Nullable<string>[]>;
+    tracksIds?: Nullable<Nullable<string>[]>;
+    genresIds?: Nullable<Nullable<string>[]>;
+}
+
+export interface PaginationInput {
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+}
+
 export interface ArtistInput {
     firstName?: Nullable<string>;
     secondName?: Nullable<string>;
@@ -16,11 +30,6 @@ export interface ArtistInput {
     country?: Nullable<string>;
     bandsIds?: Nullable<Nullable<string>[]>;
     instruments?: Nullable<Nullable<string>[]>;
-}
-
-export interface PaginationInput {
-    limit?: Nullable<number>;
-    offset?: Nullable<number>;
 }
 
 export interface BandInput {
@@ -61,19 +70,9 @@ export interface Album {
     image?: Nullable<string>;
 }
 
-export interface Artist {
-    id: string;
-    firstName?: Nullable<string>;
-    secondName?: Nullable<string>;
-    middleName?: Nullable<string>;
-    birthDate?: Nullable<string>;
-    birthPlace?: Nullable<string>;
-    country?: Nullable<string>;
-    bands?: Nullable<Nullable<Band>[]>;
-    instruments?: Nullable<Nullable<string>[]>;
-}
-
 export interface IQuery {
+    album(id: string): Nullable<Album> | Promise<Nullable<Album>>;
+    albums(paginationInput?: Nullable<PaginationInput>): Nullable<AlbumsResult> | Promise<Nullable<AlbumsResult>>;
     artist(id: string): Nullable<Artist> | Promise<Nullable<Artist>>;
     artists(paginationInput?: Nullable<PaginationInput>): Nullable<ArtistsResult> | Promise<Nullable<ArtistsResult>>;
     band(id: string): Nullable<Band> | Promise<Nullable<Band>>;
@@ -86,6 +85,9 @@ export interface IQuery {
 }
 
 export interface IMutation {
+    createAlbum(createAlbumInput?: Nullable<AlbumInput>): Nullable<Album> | Promise<Nullable<Album>>;
+    updateAlbum(id: string, updateAlbumInput?: Nullable<AlbumInput>): Nullable<Album> | Promise<Nullable<Album>>;
+    deleteAlbum(id: string): Nullable<DeleteAlbumResult> | Promise<Nullable<DeleteAlbumResult>>;
     createArtist(createArtistInput?: Nullable<ArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
     updateArtist(id: string, updateArtistInput?: Nullable<ArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
     deleteArtist(id: string): Nullable<DeleteArtistResult> | Promise<Nullable<DeleteArtistResult>>;
@@ -104,6 +106,30 @@ export interface IMutation {
     updateGenre(id: string, updateGenreInput?: Nullable<GenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
     deleteGenre(id: string): Nullable<DeleteGenreResult> | Promise<Nullable<DeleteGenreResult>>;
     register(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
+}
+
+export interface DeleteAlbumResult {
+    acknowledged?: Nullable<boolean>;
+    deletedCount?: Nullable<number>;
+}
+
+export interface AlbumsResult {
+    items?: Nullable<Nullable<Album>[]>;
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+    total?: Nullable<number>;
+}
+
+export interface Artist {
+    id: string;
+    firstName?: Nullable<string>;
+    secondName?: Nullable<string>;
+    middleName?: Nullable<string>;
+    birthDate?: Nullable<string>;
+    birthPlace?: Nullable<string>;
+    country?: Nullable<string>;
+    bands?: Nullable<Nullable<Band>[]>;
+    instruments?: Nullable<Nullable<string>[]>;
 }
 
 export interface DeleteArtistResult {
