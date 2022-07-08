@@ -6,7 +6,7 @@ import { UsersModule } from './modules/users/users.module';
 import { ArtistsModule } from './modules/artists/artists.module';
 import { BandsModule } from './modules/bands/bands.module';
 import { GenresModule } from './modules/genres/genres.module';
-import { GraphQLError, GraphQLFormattedError } from 'graphql';
+import { FavouritesModule } from './modules/favourites/favourites.module';
 
 @Module({
   imports: [
@@ -14,6 +14,7 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
     ArtistsModule,
     BandsModule,
     GenresModule,
+    FavouritesModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       context: ({ req }: any) => ({ req }),

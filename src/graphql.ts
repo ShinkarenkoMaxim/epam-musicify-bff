@@ -78,6 +78,7 @@ export interface IQuery {
     artists(paginationInput?: Nullable<PaginationInput>): Nullable<ArtistsResult> | Promise<Nullable<ArtistsResult>>;
     band(id: string): Nullable<Band> | Promise<Nullable<Band>>;
     bands(paginationInput?: Nullable<PaginationInput>): Nullable<BandsResult> | Promise<Nullable<BandsResult>>;
+    favourites(): Nullable<Favourites> | Promise<Nullable<Favourites>>;
     genre(id: string): Nullable<Genre> | Promise<Nullable<Genre>>;
     genres(paginationInput?: Nullable<PaginationInput>): Nullable<GenresResult> | Promise<Nullable<GenresResult>>;
     user(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
@@ -91,6 +92,14 @@ export interface IMutation {
     createBand(createBandInput?: Nullable<BandInput>, createMembersInput?: Nullable<Nullable<MemberInput>[]>): Nullable<Band> | Promise<Nullable<Band>>;
     updateBand(id: string, updateBandInput?: Nullable<BandInput>, updateMembersInput?: Nullable<Nullable<MemberInput>[]>): Nullable<Band> | Promise<Nullable<Band>>;
     deleteBand(id: string): Nullable<DeleteBandResult> | Promise<Nullable<DeleteBandResult>>;
+    addTrackToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
+    addBandToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
+    addArtistToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
+    addGenreToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
+    removeTrackToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
+    removeBandToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
+    removeArtistToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
+    removeGenreToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
     createGenre(createGenreInput?: Nullable<GenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
     updateGenre(id: string, updateGenreInput?: Nullable<GenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
     deleteGenre(id: string): Nullable<DeleteGenreResult> | Promise<Nullable<DeleteGenreResult>>;
@@ -139,10 +148,10 @@ export interface BandsResult {
 export interface Favourites {
     id: string;
     userId?: Nullable<string>;
-    bands?: Nullable<Nullable<Band>[]>;
-    genres?: Nullable<Nullable<Genre>[]>;
-    artists?: Nullable<Nullable<Artist>[]>;
-    tracks?: Nullable<Nullable<Track>[]>;
+    bandsIds?: Nullable<Nullable<string>[]>;
+    genresIds?: Nullable<Nullable<string>[]>;
+    artistsIds?: Nullable<Nullable<string>[]>;
+    tracksIds?: Nullable<Nullable<string>[]>;
 }
 
 export interface Genre {
