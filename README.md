@@ -1,3 +1,8 @@
+# Musicify BFF
+Project for learning GraphQL
+
+Task from https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/graphql-service/assignment.md
+
 ## Description
 
 BFF for Musicify [microservices project](https://github.com/rolling-scopes-school/node-graphql-service) based on Nest.js and work with GraphQL.
