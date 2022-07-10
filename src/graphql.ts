@@ -12,7 +12,7 @@ export interface AlbumInput {
     released?: Nullable<number>;
     artistsIds?: Nullable<Nullable<string>[]>;
     bandsIds?: Nullable<Nullable<string>[]>;
-    tracksIds?: Nullable<Nullable<string>[]>;
+    trackIds?: Nullable<Nullable<string>[]>;
     genresIds?: Nullable<Nullable<string>[]>;
 }
 
@@ -30,6 +30,13 @@ export interface ArtistInput {
     country?: Nullable<string>;
     bandsIds?: Nullable<Nullable<string>[]>;
     instruments?: Nullable<Nullable<string>[]>;
+}
+
+export interface FilterInput {
+    artistsIds?: Nullable<Nullable<string>[]>;
+    bandsIds?: Nullable<Nullable<string>[]>;
+    genresIds?: Nullable<Nullable<string>[]>;
+    tracksIds?: Nullable<Nullable<string>[]>;
 }
 
 export interface BandInput {
@@ -84,14 +91,14 @@ export interface IQuery {
     album(id: string): Nullable<Album> | Promise<Nullable<Album>>;
     albums(paginationInput?: Nullable<PaginationInput>): Nullable<AlbumsResult> | Promise<Nullable<AlbumsResult>>;
     artist(id: string): Nullable<Artist> | Promise<Nullable<Artist>>;
-    artists(paginationInput?: Nullable<PaginationInput>): Nullable<ArtistsResult> | Promise<Nullable<ArtistsResult>>;
+    artists(paginationInput?: Nullable<PaginationInput>, filter?: Nullable<FilterInput>): Nullable<ArtistsResult> | Promise<Nullable<ArtistsResult>>;
     band(id: string): Nullable<Band> | Promise<Nullable<Band>>;
-    bands(paginationInput?: Nullable<PaginationInput>): Nullable<BandsResult> | Promise<Nullable<BandsResult>>;
+    bands(paginationInput?: Nullable<PaginationInput>, filter?: Nullable<FilterInput>): Nullable<BandsResult> | Promise<Nullable<BandsResult>>;
     favourites(): Nullable<Favourites> | Promise<Nullable<Favourites>>;
     genre(id: string): Nullable<Genre> | Promise<Nullable<Genre>>;
-    genres(paginationInput?: Nullable<PaginationInput>): Nullable<GenresResult> | Promise<Nullable<GenresResult>>;
+    genres(paginationInput?: Nullable<PaginationInput>, filter?: Nullable<FilterInput>): Nullable<GenresResult> | Promise<Nullable<GenresResult>>;
     track(id: string): Nullable<Track> | Promise<Nullable<Track>>;
-    tracks(paginationInput?: Nullable<PaginationInput>): Nullable<TracksResult> | Promise<Nullable<TracksResult>>;
+    tracks(paginationInput?: Nullable<PaginationInput>, filter?: Nullable<FilterInput>): Nullable<TracksResult> | Promise<Nullable<TracksResult>>;
     user(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
     jwt(email: string, password: string): Nullable<JWT> | Promise<Nullable<JWT>>;
 }
@@ -189,10 +196,10 @@ export interface BandsResult {
 export interface Favourites {
     id: string;
     userId?: Nullable<string>;
-    bandsIds?: Nullable<Nullable<string>[]>;
-    genresIds?: Nullable<Nullable<string>[]>;
-    artistsIds?: Nullable<Nullable<string>[]>;
-    tracksIds?: Nullable<Nullable<string>[]>;
+    bands?: Nullable<Nullable<Band>[]>;
+    genres?: Nullable<Nullable<Genre>[]>;
+    artists?: Nullable<Nullable<Artist>[]>;
+    tracks?: Nullable<Nullable<Track>[]>;
 }
 
 export interface Genre {

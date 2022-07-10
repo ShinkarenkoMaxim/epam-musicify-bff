@@ -13,11 +13,11 @@ import { CreateGenreDto } from '../dto/create-genre.dto';
 import { UpdateGenreDto } from '../dto/update-genre.dto';
 import { GenresService } from '../services/genres.service';
 
-@Resolver()
+@Resolver('Genre')
 export class GenresResolver {
   constructor(private genresService: GenresService) {}
 
-  @ResolveField()
+  @ResolveField('id')
   async id(@Parent() genre: any) {
     return genre._id;
   }
@@ -29,8 +29,11 @@ export class GenresResolver {
   }
 
   @Query()
-  async genres(@Args('paginationInput') pagination: any): Promise<any> {
-    const genre = await this.genresService.find(pagination);
+  async genres(
+    @Args('paginationInput') pagination: any,
+    @Args('filter') filter: any,
+  ): Promise<any> {
+    const genre = await this.genresService.find(pagination, filter?.genresIds);
     return genre;
   }
 

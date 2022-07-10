@@ -24,10 +24,17 @@ export class GenresService {
     return res;
   }
 
-  async find(paginationInput?: { limit: number; offset: number }) {
+  async find(
+    paginationInput?: { limit: number; offset: number },
+    genresIds?: string[],
+  ) {
+    let params = {};
+    if (paginationInput) params = Object.assign(params, { ...paginationInput });
+    if (genresIds) params = Object.assign(params, { _id: genresIds });
+
     let res = await lastValueFrom(
       this.httpService
-        .get(this.baseUrl, { params: { ...paginationInput } })
+        .get(this.baseUrl, { params })
         .pipe(map((response) => response.data)),
     );
 

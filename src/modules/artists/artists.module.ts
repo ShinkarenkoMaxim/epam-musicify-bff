@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ArtistsResolver } from './resolvers/artists.resolver';
 import { ArtistsService } from './services/artists.service';
 import { AuthService } from '../users/services/auth.service';
+import { BandsService } from '../bands/services/bands.service';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { AuthService } from '../users/services/auth.service';
       maxRedirects: 5,
     }),
   ],
-  providers: [ArtistsService, ArtistsResolver, AuthService],
+  providers: [ArtistsService, ArtistsResolver, AuthService, BandsService],
 })
 export class ArtistsModule {}

@@ -37,7 +37,7 @@ input AlbumInput {
   released: Int
   artistsIds: [String]
   bandsIds: [String]
-  tracksIds: [String]
+  trackIds: [String]
   genresIds: [String]
 }
 

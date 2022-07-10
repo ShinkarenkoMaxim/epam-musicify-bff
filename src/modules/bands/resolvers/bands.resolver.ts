@@ -8,19 +8,35 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { GenresService } from 'src/modules/genres/services/genres.service';
 import { AuthGuard } from '../../users/guards/auth.guard';
 import { Member } from '../classes/member';
 import { CreateBandDto } from '../dto/create-band.dto';
 import { UpdateBandDto } from '../dto/update-band.dto';
 import { BandsService } from '../services/bands.service';
 
-@Resolver()
+@Resolver('Band')
 export class BandsResolver {
-  constructor(private bandsService: BandsService) {}
+  constructor(
+    private bandsService: BandsService,
+    private genresService: GenresService,
+  ) {}
 
-  @ResolveField()
+  @ResolveField('id')
   async id(@Parent() band: any) {
     return band._id;
+  }
+
+  @ResolveField('genres')
+  async genres(@Parent() band) {
+    const { genresIds } = band;
+
+    if (genresIds.length > 0) {
+      const { items } = await this.genresService.find(null, genresIds);
+      return items;
+    }
+
+    return [];
   }
 
   @Query()
@@ -30,8 +46,11 @@ export class BandsResolver {
   }
 
   @Query()
-  async bands(@Args('paginationInput') pagination: any): Promise<any> {
-    const band = await this.bandsService.find(pagination);
+  async bands(
+    @Args('paginationInput') pagination: any,
+    @Args('filter') filter: any,
+  ): Promise<any> {
+    const band = await this.bandsService.find(pagination, filter?.bandsIds);
     return band;
   }
 

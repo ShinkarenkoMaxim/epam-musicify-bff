@@ -8,18 +8,76 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { ArtistsService } from 'src/modules/artists/services/artists.service';
+import { BandsService } from 'src/modules/bands/services/bands.service';
+import { GenresService } from 'src/modules/genres/services/genres.service';
+import { TracksService } from 'src/modules/tracks/services/tracks.services';
 import { AuthGuard } from 'src/modules/users/guards/auth.guard';
 import { CreateAlbumDto } from '../dto/create-album.dto';
 import { UpdateAlbumDto } from '../dto/update-album.dto';
 import { AlbumsService } from '../services/albums.service';
 
-@Resolver()
+@Resolver('Album')
 export class AlbumsResolver {
-  constructor(private albumsService: AlbumsService) {}
+  constructor(
+    private albumsService: AlbumsService,
+    private artistsService: ArtistsService,
+    private bandsService: BandsService,
+    private tracksService: TracksService,
+    private genresService: GenresService,
+  ) {}
 
-  @ResolveField()
+  @ResolveField('id')
   async id(@Parent() album: any) {
     return album._id;
+  }
+
+  @ResolveField('artists')
+  async artists(@Parent() album) {
+    const { artistsIds } = album;
+
+    if (artistsIds.length > 0) {
+      const { items } = await this.artistsService.find(null, artistsIds);
+      return items;
+    }
+
+    return [];
+  }
+
+  @ResolveField('bands')
+  async bands(@Parent() album) {
+    const { bandsIds } = album;
+
+    if (bandsIds.length > 0) {
+      const { items } = await this.bandsService.find(null, bandsIds);
+      return items;
+    }
+
+    return [];
+  }
+
+  @ResolveField('tracks')
+  async tracks(@Parent() album) {
+    const { trackIds } = album;
+
+    if (trackIds.length > 0) {
+      const { items } = await this.tracksService.find(null, trackIds);
+      return items;
+    }
+
+    return [];
+  }
+
+  @ResolveField('genres')
+  async genres(@Parent() album) {
+    const { genresIds } = album;
+
+    if (genresIds.length > 0) {
+      const { items } = await this.genresService.find(null, genresIds);
+      return items;
+    }
+
+    return [];
   }
 
   @Query()

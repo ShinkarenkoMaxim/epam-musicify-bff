@@ -12,7 +12,7 @@ type Artist {
 
 type Query {
   artist(id: ID!): Artist
-  artists(paginationInput: PaginationInput): ArtistsResult
+  artists(paginationInput: PaginationInput, filter: FilterInput): ArtistsResult
 }
 
 type Mutation {
@@ -47,4 +47,8 @@ input ArtistInput {
 input PaginationInput {
   limit: Int
   offset: Int
+}
+
+input FilterInput {
+  artistsIds: [String]
 }

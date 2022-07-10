@@ -24,10 +24,17 @@ export class ArtistsService {
     return res;
   }
 
-  async find(paginationInput?: { limit: number; offset: number }) {
+  async find(
+    paginationInput?: { limit: number; offset: number },
+    artistsIds?: string[],
+  ) {
+    let params = {};
+    if (paginationInput) params = Object.assign(params, { ...paginationInput });
+    if (artistsIds) params = Object.assign(params, { _id: artistsIds });
+
     let res = await lastValueFrom(
       this.httpService
-        .get(this.baseUrl, { params: { ...paginationInput } })
+        .get(this.baseUrl, { params })
         .pipe(map((response) => response.data)),
     );
 

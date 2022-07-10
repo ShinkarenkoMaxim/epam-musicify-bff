@@ -1,4 +1,4 @@
-import { UseGuards } from '@nestjs/common';
+import { Res, UseGuards } from '@nestjs/common';
 import {
   Args,
   Context,
@@ -12,14 +12,30 @@ import { UpdateArtistDto } from '../dto/update-artist.dto';
 import { CreateArtistDto } from '../dto/create-artist.dto';
 import { AuthGuard } from '../../users/guards/auth.guard';
 import { ArtistsService } from '../services/artists.service';
+import { BandsService } from 'src/modules/bands/services/bands.service';
 
-@Resolver()
+@Resolver('Artist')
 export class ArtistsResolver {
-  constructor(private artistsService: ArtistsService) {}
+  constructor(
+    private artistsService: ArtistsService,
+    private bandsService: BandsService,
+  ) {}
 
-  @ResolveField()
+  @ResolveField('id')
   async id(@Parent() artist: any) {
     return artist._id;
+  }
+
+  @ResolveField('bands')
+  async bands(@Parent() artist) {
+    const { bandsIds } = artist;
+
+    if (bandsIds.length > 0) {
+      const { items } = await this.bandsService.find(null, bandsIds);
+      return items;
+    }
+
+    return [];
   }
 
   @Query()
@@ -29,8 +45,14 @@ export class ArtistsResolver {
   }
 
   @Query()
-  async artists(@Args('paginationInput') pagination: any): Promise<any> {
-    const artist = await this.artistsService.find(pagination);
+  async artists(
+    @Args('paginationInput') pagination: any,
+    @Args('filter') filter: any,
+  ): Promise<any> {
+    const artist = await this.artistsService.find(
+      pagination,
+      filter?.artistsIds,
+    );
     return artist;
   }
 

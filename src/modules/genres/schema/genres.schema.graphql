@@ -8,7 +8,7 @@ type Genre {
 
 type Query {
   genre(id: ID!): Genre
-  genres(paginationInput: PaginationInput): GenresResult
+  genres(paginationInput: PaginationInput, filter: FilterInput): GenresResult
 }
 
 type Mutation {
@@ -39,4 +39,8 @@ input GenreInput {
 input PaginationInput {
   limit: Int
   offset: Int
+}
+
+input FilterInput {
+  genresIds: [String]
 }

@@ -15,7 +15,7 @@ type Member {
 
 type Query {
   band(id: ID!): Band
-  bands(paginationInput: PaginationInput): BandsResult
+  bands(paginationInput: PaginationInput, filter: FilterInput): BandsResult
 }
 
 type Mutation {
@@ -59,4 +59,8 @@ input MemberInput {
 input PaginationInput {
   limit: Int
   offset: Int
+}
+
+input FilterInput {
+  bandsIds: [String]
 }
